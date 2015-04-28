@@ -67,6 +67,48 @@
 		}
 	}
 	
+	function paging($page_number_limit,$page){
+		$page = empty($_GET["page"])? 1:$_GET["page"];
+		
+		$next = $page + 1;
+		$prev = $page - 1;
+	
+		if($page != 1) {
+			echo '<a href = "?page ='.$prev.'">&laquo; 前へ</a>';
+		} else {
+			echo '<a href ="?page = '.$next.'">次へ &raquo;</a>';
+		}
+
+	}
+		$keijiban_file = 'keijiban.txt';                
+		$log_data = file($keijiban_file);
+		$log_data_count = count($log_data) / 4;
+ 			
+		$disp_number_per_page = 5;
+		$page_number_limit = ceil($log_data_count/$disp_number_per_page);
+		
+var_dump($page_number_limit);		
+		$page = empty($_GET["page"])? 1:$_GET["page"];
+	
+	function disp_log($page,$page,$disp_number_per_page){
+	
+	global $logdata,$log_data_count;
+
+	$start = ($page == 1)? 0:($page -1) * $disp_number_per_page;
+	$end = ($page * $disp_number_per_page);
+
+	print "<p>";
+	
+	for($i=$start; $i<$end; $i++){
+		if($i >= $log_data_count){break;}
+		echo $logdata[$i]."<br>";
+	}
+	print "</p>";
+	}
+
+	paging($page_number_limit,$page);
+	disp_log($page,$page,$disp_number_per_page);
+	
 
 	?>  
 
